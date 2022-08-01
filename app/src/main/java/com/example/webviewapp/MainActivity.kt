@@ -1,34 +1,41 @@
 package com.example.webviewapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var webView: WebView
-    private val URL = "https://myknowledgechat.rbspeople.com"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        webView = WebView(applicationContext)
-        webView.apply {
-            webViewClient = WebViewClient()
-            settings.javaScriptEnabled = true
-            isScrollbarFadingEnabled = true
-            setInitialScale(150)
-            loadUrl(URL)
-
-        }
-        setContentView(webView)
+        setContentView(R.layout.activity_main)
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container_view, WebViewFragment()).commit()
 
     }
 
-    override fun onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack()
-        } else {
-            super.onBackPressed()
-        }
-    }
+//    override fun onBackPressed() {
+//        val count = supportFragmentManager.backStackEntryCount
+//        if (count == 0) {
+//            super.onBackPressed()
+//            //add extra code
+//        } else {
+//            supportFragmentManager.popBackStack()
+//        }
+//    }
+
+//    override fun onBackPressed() {
+//        val webview: Fragment? = supportFragmentManager.findFragmentByTag("webviewfragment")
+//        if (webview is WebViewFragment) {
+//            val goback: Boolean = (webview as WebViewFragment?).canGoBack()
+//            if (!goback) super.onBackPressed()
+//        }
+//    }
+
+    //    override fun onBackPressed() {
+//        if (webView.canGoBack()) {
+//            webView.goBack()
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
 }
