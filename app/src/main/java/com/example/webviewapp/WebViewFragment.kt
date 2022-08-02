@@ -1,19 +1,23 @@
 package com.example.webviewapp
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import com.example.webviewapp.databinding.FragmentWebViewBinding
 
 
 class WebViewFragment : Fragment() {
 
+    private var _binding: FragmentWebViewBinding? = null
+    private val binding get() = _binding
     private val URL = "https://myknowledgechat.rbspeople.com"
 
 
@@ -21,22 +25,32 @@ class WebViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_web_view, container, false)
+        _binding = FragmentWebViewBinding.inflate(inflater, container, false)
+        val view = binding!!.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val webView: WebView = view?.findViewById(R.id.webView)
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
-                view?.loadUrl(url)
+        setUpWebView()
+    }
+
+    private fun setUpWebView() {
+        binding?.webView?.webViewClient = object : WebViewClient() {
+
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                view.loadUrl(url)
                 return true
             }
+
+            override fun onPageFinished(view: WebView, url: String) {
+                hideProgress()
+                super.onPageFinished(view, url)
+
+            }
+
         }
-        webView?.apply {
-            webViewClient = WebViewClient()
+        binding?.webView?.apply {
+            webViewClient = myWebViewClient()
             settings.javaScriptEnabled = true
             settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             settings.domStorageEnabled = true
@@ -47,19 +61,47 @@ class WebViewFragment : Fragment() {
 
 
         }
-        webView.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-                webView.goBack() // Navigate back to previous web page if there is one
+        binding?.webView?.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && binding!!.webView!!.canGoBack()) {
+                binding!!.webView!!.goBack() // Navigate back to previous web page if there is one
                 //nested_scroll.scrollTo(0, 0) // Scroll webview back to top of previous page
             }
             true
+        }
+    }
+
+    private fun showProgress() {
+        binding?.progressBar?.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        binding?.progressBar?.visibility = View.GONE
+    }
+
+    inner class myWebViewClient : WebViewClient() {
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            showProgress()
+            super.onPageStarted(view, url, favicon)
+        }
+
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            view.loadUrl(url)
+            return true
+        }
+
+        override fun onPageFinished(view: WebView, url: String) {
+            hideProgress()
+            super.onPageFinished(view, url)
+
         }
 
     }
 
 
-
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
