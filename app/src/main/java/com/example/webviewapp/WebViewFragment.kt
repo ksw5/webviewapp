@@ -62,8 +62,8 @@ class WebViewFragment : Fragment() {
 
         }
         binding?.webView?.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && binding!!.webView!!.canGoBack()) {
-                binding!!.webView!!.goBack() // Navigate back to previous web page if there is one
+            if (keyCode == KeyEvent.KEYCODE_BACK && binding?.webView?.canGoBack() == true) {
+                binding?.webView?.goBack() // Navigate back to previous web page if there is one
                 //nested_scroll.scrollTo(0, 0) // Scroll webview back to top of previous page
             }
             true
