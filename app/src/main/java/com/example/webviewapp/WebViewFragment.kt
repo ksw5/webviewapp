@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.example.webviewapp.databinding.FragmentWebViewBinding
 
@@ -18,7 +17,7 @@ class WebViewFragment : Fragment() {
 
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding
-    private val URL = "https://myknowledgechat.rbspeople.com"
+    private val URL = BuildConfig.HostUrl
 
 
     override fun onCreateView(
@@ -35,22 +34,9 @@ class WebViewFragment : Fragment() {
     }
 
     private fun setUpWebView() {
-        binding?.webView?.webViewClient = object : WebViewClient() {
 
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                view.loadUrl(url)
-                return true
-            }
-
-            override fun onPageFinished(view: WebView, url: String) {
-                hideProgress()
-                super.onPageFinished(view, url)
-
-            }
-
-        }
         binding?.webView?.apply {
-            webViewClient = myWebViewClient()
+            webViewClient = MyWebViewClient()
             settings.javaScriptEnabled = true
             settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             settings.domStorageEnabled = true
@@ -58,8 +44,6 @@ class WebViewFragment : Fragment() {
             isScrollbarFadingEnabled = true
             setInitialScale(150)
             loadUrl(URL)
-
-
         }
         binding?.webView?.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK && binding?.webView?.canGoBack() == true) {
@@ -78,7 +62,7 @@ class WebViewFragment : Fragment() {
         binding?.progressBar?.visibility = View.GONE
     }
 
-    inner class myWebViewClient : WebViewClient() {
+    inner class MyWebViewClient : WebViewClient() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             showProgress()

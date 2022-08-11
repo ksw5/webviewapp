@@ -10,6 +10,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        def localProperties = new File(rootDir, "local.properties")
+        Properties properties = new Properties()
+        localProperties.withInputStream { instr ->
+            properties.load(instr)
+        }
+        def sdkDir = properties.getProperty('sdk.dir')
+        maven { url sdkDir+'/extras/blackberry/dynamics_sdk/m2repository' }
+        maven {url "https://software.download.blackberry.com/repository/maven/"}
     }
 }
 rootProject.name = "webviewapp"
