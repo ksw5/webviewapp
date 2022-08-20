@@ -3,39 +3,45 @@ package com.example.webviewapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.good.gd.GDAndroid
+import com.good.gd.GDStateListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GDStateListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().add(R.id.fragment_container_view, WebViewFragment()).commit()
 
+        GDAndroid.getInstance().activityInit(this@MainActivity)
+
     }
 
-//    override fun onBackPressed() {
-//        val count = supportFragmentManager.backStackEntryCount
-//        if (count == 0) {
-//            super.onBackPressed()
-//            //add extra code
-//        } else {
-//            supportFragmentManager.popBackStack()
-//        }
-//    }
+    override fun onAuthorized() {
 
-//    override fun onBackPressed() {
-//        val webview: Fragment? = supportFragmentManager.findFragmentByTag("webviewfragment")
-//        if (webview is WebViewFragment) {
-//            val goback: Boolean = (webview as WebViewFragment?).canGoBack()
-//            if (!goback) super.onBackPressed()
-//        }
-//    }
+    }
 
-    //    override fun onBackPressed() {
-//        if (webView.canGoBack()) {
-//            webView.goBack()
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
+    override fun onLocked() {
+
+    }
+
+    override fun onWiped() {
+
+    }
+
+    override fun onUpdateConfig(p0: MutableMap<String, Any>?) {
+
+    }
+
+    override fun onUpdatePolicy(p0: MutableMap<String, Any>?) {
+
+    }
+
+    override fun onUpdateServices() {
+
+    }
+
+    override fun onUpdateEntitlements() {
+
+    }
 }

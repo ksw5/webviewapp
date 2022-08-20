@@ -11,9 +11,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.example.webviewapp.databinding.FragmentWebViewBinding
+import com.good.gd.GDStateListener
 
 
-class WebViewFragment : Fragment() {
+class WebViewFragment : Fragment(), GDStateListener {
 
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding
@@ -86,6 +87,34 @@ class WebViewFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onAuthorized() {
+        setUpWebView()
+    }
+
+    override fun onLocked() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onWiped() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdateConfig(p0: MutableMap<String, Any>?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdatePolicy(p0: MutableMap<String, Any>?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdateServices() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdateEntitlements() {
+        TODO("Not yet implemented")
     }
 
 }

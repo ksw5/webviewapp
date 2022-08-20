@@ -1,5 +1,13 @@
 {
   "GDLibraryMode": "GDEnterpriseSimulation",
   "GDApplicationID": "com.example.webviewapp",
-  "GDApplicationVersion": "1.0.0.0"
+  "GDApplicationVersion": "1.0.0.0",
+  "GDConsoleLogger": [
+    "GDFilterNone",
+    "GDFilterErrors_",
+    "GDFilterWarnings_",
+    "GDFilterInfo_",
+    "GDFilterDetailed_"
+  ]
+
 }
