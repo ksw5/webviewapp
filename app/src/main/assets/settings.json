@@ -1,5 +1,5 @@
 {
-  "GDLibraryMode": "GDEnterpriseSimulation",
+  "GDLibraryMode": "GDEnterprise",
   "GDApplicationID": "com.example.webviewapp",
   "GDApplicationVersion": "1.0.0.0",
   "GDConsoleLogger": [
